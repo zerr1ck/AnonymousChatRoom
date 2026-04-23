@@ -1,0 +1,5 @@
+Flask==2.3.3
+Flask-SocketIO==5.3.6
+eventlet==0.33.3
+pytest==7.4.3
+pytest-flask==1.2.0

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Chat Terminal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="terminal-window">
+            <div class="title-bar">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+                <div class="title">ANONYMOUS CHAT TERMINAL</div>
+                <div class="status">USERS: <span id="online-count">0</span></div>
+            </div>
+            
+            <div class="chat-area">
+                <div class="users-panel">
+                    <div class="panel-tabs">
+                        <button class="tab-btn active" data-tab="users">USERS</button>
+                        <button class="tab-btn" data-tab="private">CHATS</button>
+                    </div>
+                    
+                    <div class="tab-content" id="users-tab">
+                        <h3>ONLINE USERS</h3>
+                        <ul id="online-users"></ul>
+                    </div>
+                    
+                    <div class="tab-content hidden" id="private-tab">
+                        <h3>PRIVATE CHATS</h3>
+                        <ul id="private-chats"></ul>
+                        <div class="no-chats" id="no-private-chats">No private chats yet</div>
+                    </div>
+                </div>
+                
+                <div class="main-area">
+                    <div class="chat-tabs">
+                        <button class="chat-tab active" data-chat="public">PUBLIC CHAT</button>
+                        <button class="chat-tab" id="private-chat-tab" style="display:none">PRIVATE</button>
+                    </div>
+                    
+                    <div class="messages-panel">
+                        <div id="messages"></div>
+                        <div id="typing-indicator"></div>
+                    </div>
+                    
+                    <footer>
+                        <div class="upload-area">
+                            <input type="file" id="file-input" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt" multiple>
+                            <button id="upload-btn" class="upload-btn">UPLOAD</button>
+                            <div id="upload-progress" class="upload-progress hidden">
+                                <div class="progress-bar"></div>
+                                <span class="progress-text">0%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="input-area">
+                            <span class="prompt">&gt;</span>
+                            <input type="text" id="message-input" placeholder="Enter message...">
+                            <span class="cursor-blink" id="cursor"></span>
+                            <button id="send-btn">SEND</button>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="file-preview-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">FILE PREVIEW</span>
+                <button class="modal-close" id="close-preview">&times;</button>
+            </div>
+            <div class="modal-body" id="preview-content"></div>
+            <div class="modal-footer">
+                <button class="modal-btn" id="download-file">DOWNLOAD</button>
+                <button class="modal-btn cancel" id="close-modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="private-chat-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">START PRIVATE CHAT</span>
+                <button class="modal-close" id="close-private-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Select a user to start a private chat:</p>
+                <ul id="private-chat-users"></ul>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn cancel" id="cancel-private-chat">CANCEL</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
